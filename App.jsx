@@ -34,7 +34,7 @@ const App = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <StatusBar backgroundColor='green' />
-      <Text style={styles.heading}>Product List:</Text>
+      <Text style={styles.heading}>PRODUCT LIST</Text>
 
       {data.map((item) => (
         <View key={item.id} style={styles.product}>
@@ -42,11 +42,12 @@ const App = () => {
           <View style={styles.textContainer}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.price}>{item.price} $</Text>
+            <MyButton style={styles.myButton} onPress={clickMe} title='Order Now' />
+
           </View>
         </View>
       ))}
 
-      <MyButton onPress={clickMe} title='Order Now' />
     </ScrollView>
   );
 };
@@ -95,4 +96,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "green",
   },
+
 });
