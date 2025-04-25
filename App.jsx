@@ -5,14 +5,15 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
+  FlatList,
   Dimensions,
+  TouchableOpacity,
 } from "react-native";
-import MyButton from './Components/Button/Button';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const screenWidth = Dimensions.get("window").width;
+const { width } = Dimensions.get("window");
+const CARD_WIDTH = (width - 48) / 2;
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -28,27 +29,38 @@ const App = () => {
   }, []);
 
   const clickMe = () => {
-    Alert.alert("Order placed!");
+    Alert.alert("Order placed successfully!");
   };
 
+  const renderItem = ({ item }) => (
+    <View style={styles.card}>
+      <Image source={{ uri: item.image }} style={styles.image} />
+      <Text style={styles.title} numberOfLines={2}>{item.title}</Text>
+      <Text style={styles.category}>{item.category}</Text>
+      <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+      <Text style={styles.rating}>⭐ {item.rating.rate}</Text>
+
+      <TouchableOpacity onPress={clickMe} style={styles.button}>
+        <Text style={styles.buttonText}>Order Now</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <StatusBar backgroundColor='green' />
-      <Text style={styles.heading}>PRODUCT LIST</Text>
-
-      {data.map((item) => (
-        <View key={item.id} style={styles.product}>
-          <Image source={{ uri: item.image }} style={styles.productImage} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{item.title}</Text>
-            <Text style={styles.price}>{item.price} $</Text>
-            <MyButton style={styles.myButton} onPress={clickMe} title='Order Now' />
-
-          </View>
-        </View>
-      ))}
-
-    </ScrollView>
+    <View style={styles.container}>
+      <StatusBar backgroundColor="green" />
+      <Text style={styles.heading}>🛒 Shop Deals</Text>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id.toString()}
+        numColumns={2}
+        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.listContent}
+      />
+    </View>
   );
 };
 
@@ -56,45 +68,75 @@ export default App;
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    backgroundColor: "white",
-    alignItems: "center",
+    flex: 1,
+    backgroundColor: "#f9f9f9",
   },
   heading: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "blue",
-    marginBottom: 20,
+    textAlign: "center",
+    marginVertical: 20,
+    color: "#2d3436",
   },
-  product: {
-    flexDirection: 'row',
-    marginBottom: 20,
-    backgroundColor: "#f2f2f2",
-    borderRadius: 10,
-    padding: 10,
-    width: '100%',
+  listContent: {
+    paddingHorizontal: 16,
+    paddingBottom: 20,
   },
-  productImage: {
-    width: 100,
-    height: 100,
+  row: {
+    justifyContent: "space-between",
+    marginBottom: 16,
+  },
+  card: {
+    backgroundColor: "#fff",
+    width: CARD_WIDTH,
+    borderRadius: 16,
+    padding: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowOffset: { width: 0, height: 3 },
+    shadowRadius: 6,
+    elevation: 4,
+  },
+  image: {
+    width: "100%",
+    height: 120,
     resizeMode: "contain",
-    marginRight: 10,
-  },
-  textContainer: {
-    flex: 1,
-    flexShrink: 1,
-    justifyContent: "center",
+    marginBottom: 10,
+    borderRadius: 10,
+    backgroundColor: "#f1f2f6",
   },
   title: {
     fontSize: 14,
     fontWeight: "bold",
-    marginBottom: 5,
-    textAlign: "left",
-    flexWrap: "wrap",
+    color: "#2c3e50",
+    marginBottom: 4,
+  },
+  category: {
+    fontSize: 12,
+    color: "#636e72",
+    fontStyle: "italic",
+    marginBottom: 4,
   },
   price: {
-    fontSize: 16,
-    color: "green",
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#27ae60",
   },
-
+  rating: {
+    fontSize: 13,
+    color: "#f39c12",
+    fontWeight: "500",
+    marginBottom: 10,
+  },
+  button: {
+    backgroundColor: "#0984e3",
+    paddingVertical: 8,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
 });
