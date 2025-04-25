@@ -37,8 +37,10 @@ const App = () => {
       <Image source={{ uri: item.image }} style={styles.image} />
       <Text style={styles.title} numberOfLines={2}>{item.title}</Text>
       <Text style={styles.category}>{item.category}</Text>
-      <Text style={styles.price}>${item.price.toFixed(2)}</Text>
-      <Text style={styles.rating}>⭐ {item.rating.rate}</Text>
+      <View style={styles.rateRating}>
+        <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+        <Text style={styles.rating}>⭐ {item.rating.rate}</Text>
+      </View>
 
       <TouchableOpacity onPress={clickMe} style={styles.button}>
         <Text style={styles.buttonText}>Order Now</Text>
@@ -96,6 +98,10 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowRadius: 6,
     elevation: 4,
+  },
+  rateRating: {
+    flexDirection: 'row',
+    justifyContent: "space-between"
   },
   image: {
     width: "100%",
