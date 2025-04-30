@@ -8,8 +8,8 @@ const App = () => {
   return (
     <>
       {/* <NavigationReact /> */}
-      {/* <TabNavigation /> */}
-      <DrawerNavigation />
+      <TabNavigation />
+      {/* <DrawerNavigation /> */}
     </>
   )
 }

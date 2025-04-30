@@ -17,6 +17,7 @@ const CARD_WIDTH = (width - 48) / 2;
 
 const MyProducts = () => {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         axios.get('https://fakestoreapi.com/products')
@@ -41,29 +42,30 @@ const MyProducts = () => {
                 <Text style={styles.price}>${item.price}</Text>
                 <Text style={styles.rating}>⭐ {item.rating.rate}</Text>
             </View>
-
             <TouchableOpacity onPress={clickMe} style={styles.button}>
                 <Text style={styles.buttonText}>View Now</Text>
             </TouchableOpacity>
         </View>
     );
-
-
-
     return (
-        <View style={styles.container}>
-            <StatusBar backgroundColor="green" />
-            <Text style={styles.heading}>🛒 Shop Deals</Text>
-            <FlatList
-                data={data}
-                renderItem={renderItem}
-                keyExtractor={(item) => item.id.toString()}
-                numColumns={2}
-                columnWrapperStyle={styles.row}
-                contentContainerStyle={styles.listContent}
-            />
-        </View>
+        loading ? (
+            <Text style={styles.loading}>Loading...</Text>
+        ) : (
+            <View style={styles.container}>
+                <StatusBar backgroundColor="green" />
+                <Text style={styles.heading}>🛒 Shop Deals</Text>
+                <FlatList
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={2}
+                    columnWrapperStyle={styles.row}
+                    contentContainerStyle={styles.listContent}
+                />
+            </View>
+        )
     );
+
 };
 
 export default MyProducts;
@@ -145,4 +147,12 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 14,
     },
+    loading: {
+        marginTop: '200px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '40px',
+        fontWeight: '900',
+        color: 'green'
+    }
 });
