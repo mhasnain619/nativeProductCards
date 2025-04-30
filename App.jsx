@@ -6,9 +6,11 @@ import DrawerNavigation from './config/DrawerNavigation'
 
 const App = () => {
   return (
-    // <NavigationReact />
-    // <TabNavigation />
-    <DrawerNavigation />
+    <>
+      {/* <NavigationReact /> */}
+      {/* <TabNavigation /> */}
+      <DrawerNavigation />
+    </>
   )
 }
 
