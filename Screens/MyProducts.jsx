@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Searchbar } from 'react-native-paper';
+
 
 const { width } = Dimensions.get("window");
 const CARD_WIDTH = (width - 48) / 2;
@@ -18,6 +20,7 @@ const CARD_WIDTH = (width - 48) / 2;
 const MyProducts = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         axios.get('https://fakestoreapi.com/products')
@@ -48,22 +51,30 @@ const MyProducts = () => {
         </View>
     );
     return (
-        loading ? (
-            <Text style={styles.loading}>Loading...</Text>
-        ) : (
-            <View style={styles.container}>
-                <StatusBar backgroundColor="green" />
-                <Text style={styles.heading}>🛒 Shop Deals</Text>
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id.toString()}
-                    numColumns={2}
-                    columnWrapperStyle={styles.row}
-                    contentContainerStyle={styles.listContent}
-                />
-            </View>
-        )
+        <>
+            <Searchbar
+                style={styles.searchBar}
+                placeholder="Search"
+                onChangeText={setSearchQuery}
+                value={searchQuery}
+            />
+            {loading ? (
+                <Text style={styles.loading}>Loading...</Text>
+            ) : (
+                <View style={styles.container}>
+                    <StatusBar backgroundColor="green" />
+                    <Text style={styles.heading}>🛒 Shop Deals</Text>
+                    <FlatList
+                        data={data}
+                        renderItem={renderItem}
+                        keyExtractor={(item) => item.id.toString()}
+                        numColumns={2}
+                        columnWrapperStyle={styles.row}
+                        contentContainerStyle={styles.listContent}
+                    />
+                </View>
+            )}
+        </>
     );
 
 };
@@ -71,6 +82,9 @@ const MyProducts = () => {
 export default MyProducts;
 
 const styles = StyleSheet.create({
+    searchBar: {
+        marginVertical: '10px'
+    },
     container: {
         flex: 1,
         backgroundColor: "#f9f9f9",
