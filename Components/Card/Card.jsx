@@ -1,32 +1,24 @@
 import * as React from 'react';
 import { View } from 'react-native';
-import { Button, Dialog, Portal, PaperProvider, Text } from 'react-native-paper';
+import { Avatar, Button, Card, Text } from 'react-native-paper';
 
-const CardTwo = () => {
-    const [visible, setVisible] = React.useState(false);
+const LeftContent = props => <Avatar.Icon {...props} icon="folder" />
 
-    const showDialog = () => setVisible(true);
-
-    const hideDialog = () => setVisible(false);
-
-    return (
-        <PaperProvider>
-            <View>
-                <Button onPress={showDialog}>Show Dialog</Button>
-                <Portal>
-                    <Dialog visible={visible} onDismiss={hideDialog}>
-                        <Dialog.Title>Hay</Dialog.Title>
-                        <Dialog.Content>
-                            <Text variant="bodyMedium">This is simple dialog</Text>
-                        </Dialog.Content>
-                        <Dialog.Actions>
-                            <Button onPress={hideDialog}>Done</Button>
-                        </Dialog.Actions>
-                    </Dialog>
-                </Portal>
-            </View>
-        </PaperProvider>
-    );
-};
+const CardTwo = () => (
+    <View style={{ padding: 10 }}>
+        <Card>
+            <Card.Title title="Card Title" subtitle="Card Subtitle" left={LeftContent} />
+            <Card.Content>
+                <Text variant="titleLarge">Card title</Text>
+                <Text variant="bodyMedium">Card content</Text>
+            </Card.Content>
+            <Card.Cover style={{ padding: 5 }} source={{ uri: 'https://picsum.photos/400' }} />
+            <Card.Actions>
+                <Button>Cancel</Button>
+                <Button>Ok</Button>
+            </Card.Actions>
+        </Card>
+    </View>
+);
 
 export default CardTwo;
