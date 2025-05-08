@@ -1,10 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const WelcomeScreen = () => {
-    const { colors } = useTheme();
+    const navigation = useNavigation()
 
     return (
         <View style={styles.container}>
@@ -26,7 +27,7 @@ const WelcomeScreen = () => {
             <Button mode="outlined" style={styles.signUpButton}>
                 Login
             </Button>
-            <Button mode="outlined" style={styles.signUpButton}>
+            <Button onPress={navigation.navigate('Login')} mode="outlined" style={styles.signUpButton}>
                 Sign Up
             </Button>
 

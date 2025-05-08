@@ -17,7 +17,6 @@ export default function LoginScreen() {
                     resizeMode="contain"
                 />
                 <Text style={styles.loginText}>Login</Text>
-
                 <TextInput
                     label="Name"
                     mode="outlined"
