@@ -13,12 +13,12 @@ const SignupScreen = () => {
         confirmpassword: ''
     });
 
-    console.log(userData);
+    // console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
 
     const handleSubmitData = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/api/signup', userData);
+            const response = await axios.post('http://10.0.2.2:5000/api/signup', userData);
             console.log(response.data);
             Alert.alert('User Created Successfully');
             console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
@@ -33,11 +33,11 @@ const SignupScreen = () => {
                 <View style={styles.card}>
                     <Image
                         height='100%' width='100%'
-                        source={require('../Components/Images/loginImg.png')} // Replace with your illustration
+                        source={require('../Components/Images/loginImg.png')}
                         style={styles.image}
                         resizeMode="contain"
                     />
-                    <Text style={styles.loginText}>Login</Text>
+                    <Text style={styles.loginText}>Signup</Text>
                     <TextInput
                         label="Name"
                         mode="outlined"
