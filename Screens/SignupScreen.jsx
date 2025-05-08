@@ -1,31 +1,49 @@
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Alert } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
 const SignupScreen = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [userData, setUserData] = useState({
+        name: '',
+        email: '',
+        password: '',
+        confirmpassword: ''
+    });
 
+    console.log(userData);
+
+    const handleSubmitData = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:5000/api/signup', userData);
+            console.log(response.data);
+            Alert.alert('User Created Successfully');
+            console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
+        } catch (err) {
+            console.error(err);
+            setError(err.response?.data?.message || 'Signup failed. Please try again.');
+        }
+    };
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <Image
                         height='100%' width='100%'
-                        source={require('../Components/Images/loginImg.png')}
+                        source={require('../Components/Images/loginImg.png')} // Replace with your illustration
                         style={styles.image}
                         resizeMode="contain"
                     />
-                    <Text style={styles.loginText}>Signup</Text>
+                    <Text style={styles.loginText}>Login</Text>
                     <TextInput
                         label="Name"
                         mode="outlined"
                         style={styles.input}
-                        value={name}
-                        onChangeText={setName}
+                        value={userData.name}
+                        onChangeText={(text) => setUserData({ ...userData, name: text })}
                     />
 
                     <TextInput
@@ -33,8 +51,8 @@ const SignupScreen = () => {
                         mode="outlined"
                         style={styles.input}
                         keyboardType="email-address"
-                        value={email}
-                        onChangeText={setEmail}
+                        value={userData.email}
+                        onChangeText={(text) => setUserData({ ...userData, email: text })}
                     />
 
                     <TextInput
@@ -42,18 +60,26 @@ const SignupScreen = () => {
                         mode="outlined"
                         secureTextEntry
                         style={styles.input}
-                        value={password}
-                        onChangeText={setPassword}
+                        value={userData.password}
+                        onChangeText={(text) => setUserData({ ...userData, password: text })}
                     />
+                    <TextInput
+                        label="Confirm Password"
+                        mode="outlined"
+                        secureTextEntry
+                        style={styles.input}
+                        value={userData.confirmpassword}
+                        onChangeText={(text) => setUserData({ ...userData, confirmpassword: text })} />
 
-                    <Text style={styles.forgotPassword}>Already have account</Text>
+                    <Text style={styles.forgotPassword}>Already have an account.</Text>
 
                     <Button
                         mode="contained"
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
+                        onPress={handleSubmitData}
                     >
-                        Signup
+                        Sign Up
                     </Button>
                 </View>
             </View>
@@ -76,7 +102,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        height: 200,
+        height: 190,
         marginBottom: 20,
     },
     loginText: {
@@ -86,14 +112,12 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
-        paddingVertical: 2,
-        borderRadius: 10,
         marginBottom: 15,
     },
     forgotPassword: {
         alignSelf: 'flex-start',
         color: '#999',
-        marginBottom: 20,
+        marginVertical: 10,
         fontSize: 12,
     },
     button: {

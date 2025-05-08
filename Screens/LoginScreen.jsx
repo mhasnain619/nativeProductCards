@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     image: {
-        height: 200,
+        height: 260,
         marginBottom: 20,
     },
     loginText: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     forgotPassword: {
         alignSelf: 'flex-start',
         color: '#999',
-        marginBottom: 20,
+        marginVertical: 10,
         fontSize: 12,
     },
     button: {
