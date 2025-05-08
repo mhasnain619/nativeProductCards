@@ -4,7 +4,7 @@ import { View, StyleSheet, Image, Text } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
-const LoginScreen = () => {
+const SignupScreen = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -15,11 +15,11 @@ const LoginScreen = () => {
                 <View style={styles.card}>
                     <Image
                         height='100%' width='100%'
-                        source={require('../Components/Images/loginImg.png')} // Replace with your illustration
+                        source={require('../Components/Images/loginImg.png')}
                         style={styles.image}
                         resizeMode="contain"
                     />
-                    <Text style={styles.loginText}>Login</Text>
+                    <Text style={styles.loginText}>Signup</Text>
                     <TextInput
                         label="Name"
                         mode="outlined"
@@ -46,21 +46,21 @@ const LoginScreen = () => {
                         onChangeText={setPassword}
                     />
 
-                    <Text style={styles.forgotPassword}>Forgot password?</Text>
+                    <Text style={styles.forgotPassword}>Already have account</Text>
 
                     <Button
                         mode="contained"
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
                     >
-                        Sign Up
+                        Signup
                     </Button>
                 </View>
             </View>
         </ScrollView>
     );
 }
-export default LoginScreen
+export default SignupScreen
 
 const styles = StyleSheet.create({
     container: {
@@ -86,6 +86,8 @@ const styles = StyleSheet.create({
     },
     input: {
         width: '100%',
+        paddingVertical: 2,
+        borderRadius: 10,
         marginBottom: 15,
     },
     forgotPassword: {

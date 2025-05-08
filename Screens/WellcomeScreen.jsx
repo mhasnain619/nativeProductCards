@@ -1,18 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { Button, Text, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import MyButton from '../Components/Button/Button';
+import { useNavigation } from '@react-navigation/native'
 const WelcomeScreen = () => {
-    const navigation = useNavigation()
-
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             {/* Illustration */}
             <Image
                 height='100%' width='100%'
-                source={require('../Components/Images/home.png')} // Replace with your illustration
+                source={require('../Components/Images/home.png')}
                 style={styles.image}
                 resizeMode="contain"
             />
@@ -24,12 +23,20 @@ const WelcomeScreen = () => {
             </Text>
 
             {/* Buttons */}
-            <Button mode="outlined" style={styles.signUpButton}>
-                Login
-            </Button>
-            <Button onPress={navigation.navigate('Login')} mode="outlined" style={styles.signUpButton}>
-                Sign Up
-            </Button>
+
+            <MyButton
+                onPress={() => navigation.navigate('LoginScreen')}
+                title="Login"
+                style={styles.signUpButton}
+                textStyle={{ fontWeight: '600', color: '#514EB6' }}
+            />
+            <MyButton
+                onPress={() => navigation.navigate('SignupScreen')}
+                title="Signup"
+                style={styles.signUpButton}
+                textStyle={{ fontWeight: '600', color: '#514EB6' }}
+            />
+
 
             {/* Social Icons */}
             <Text style={styles.socialText}>Sign up using</Text>
@@ -70,11 +77,12 @@ const styles = StyleSheet.create({
     },
     signUpButton: {
         width: '80%',
-        fontWeight: '600',
         marginVertical: 8,
-        color: '#514EB6',
         borderColor: '#514EB6',
-        borderWidth: 2
+        borderWidth: 2,
+        borderRadius: 18,
+        paddingVertical: 10,
+        alignItems: 'center',
     },
     socialText: {
         marginTop: 10,

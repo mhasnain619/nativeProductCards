@@ -10,9 +10,6 @@ const Login = () => {
     });
     const getData = () => {
         console.log(userData.email, userData.password, userData.name);
-        userData.email.value == '',
-            userData.password.value == '',
-            userData.name.value == ''
     }
     return (
         <View style={styles.container}>
