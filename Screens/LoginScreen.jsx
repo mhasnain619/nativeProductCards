@@ -1,13 +1,27 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text } from 'react-native';
+import { View, StyleSheet, Image, Text, Alert } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
 const LoginScreen = () => {
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [data, setData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    })
+    const handleSubmitData = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await axios.post('http://localhost:5000/api/login', data)
+            console.log(res.data);
+            Alert.alert('login sucessfully')
+        } catch (error) {
+            console.error("Login Error:", error.response?.data || error.message);
+            Alert.alert("Invalid email or password.");
+        }
+
+    }
 
     return (
         <ScrollView>
@@ -25,7 +39,7 @@ const LoginScreen = () => {
                         mode="outlined"
                         style={styles.input}
                         value={name}
-                        onChangeText={setName}
+                        onChangeText={(text) => setData({ ...data, name: text })}
                     />
 
                     <TextInput
@@ -34,7 +48,7 @@ const LoginScreen = () => {
                         style={styles.input}
                         keyboardType="email-address"
                         value={email}
-                        onChangeText={setEmail}
+                        onChangeText={(text) => setData({ ...data, email: text })}
                     />
 
                     <TextInput
@@ -43,12 +57,13 @@ const LoginScreen = () => {
                         secureTextEntry
                         style={styles.input}
                         value={password}
-                        onChangeText={setPassword}
+                        onChangeText={(text) => setData({ ...data, password: text })}
                     />
 
                     <Text style={styles.forgotPassword}>Forgot password?</Text>
 
                     <Button
+                        onPress={handleSubmitData}
                         mode="contained"
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
