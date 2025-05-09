@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import React, { useState } from 'react';
 import { View, StyleSheet, Image, Text, Alert } from 'react-native';
 import { ScrollView } from 'react-native';
@@ -38,7 +39,7 @@ const LoginScreen = () => {
                         label="Name"
                         mode="outlined"
                         style={styles.input}
-                        value={name}
+                        value={data.name}
                         onChangeText={(text) => setData({ ...data, name: text })}
                     />
 
@@ -47,7 +48,7 @@ const LoginScreen = () => {
                         mode="outlined"
                         style={styles.input}
                         keyboardType="email-address"
-                        value={email}
+                        value={data.email}
                         onChangeText={(text) => setData({ ...data, email: text })}
                     />
 
@@ -56,7 +57,7 @@ const LoginScreen = () => {
                         mode="outlined"
                         secureTextEntry
                         style={styles.input}
-                        value={password}
+                        value={data.password}
                         onChangeText={(text) => setData({ ...data, password: text })}
                     />
 
@@ -68,7 +69,7 @@ const LoginScreen = () => {
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
                     >
-                        Sign Up
+                        Login
                     </Button>
                 </View>
             </View>
