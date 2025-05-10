@@ -1,11 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, Alert } from 'react-native';
+import { View, StyleSheet, Image, Text, Alert, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
 const SignupScreen = () => {
+    const navigation = useNavigation();
+
     const [userData, setUserData] = useState({
         name: '',
         email: '',
@@ -73,8 +75,10 @@ const SignupScreen = () => {
                         value={userData.confirmpassword}
                         onChangeText={(text) => setUserData({ ...userData, confirmpassword: text })} />
 
-                    <Text style={styles.forgotPassword}>Already have an account.</Text>
-
+                    <Text onPress={() => navigation.navigate('LoginScreen')} style={styles.forgotPassword}>Already have an account?</Text>
+                    {/* <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                        <Text style={styles.forgotPassword}>Already have an account? Log in</Text>
+                    </TouchableOpacity> */}
                     <Button
                         mode="contained"
                         style={styles.button}
