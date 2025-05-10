@@ -18,7 +18,7 @@ const SignupScreen = () => {
     const handleSubmitData = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://192.168.1.52/api/signup', userData);
+            const response = await axios.post('http://localhost:5000/api/signup', userData);
             console.log(response.data);
             Alert.alert('User Created Successfully');
             console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
