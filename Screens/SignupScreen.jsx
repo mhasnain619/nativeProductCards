@@ -17,6 +17,9 @@ const SignupScreen = () => {
 
     const handleSubmitData = async (e) => {
         e.preventDefault();
+        if (name || email || password || confirmpassword == '') {
+            Alert.alert('All fields are required.')
+        }
         try {
             const response = await axios.post('http://localhost:5000/api/signup', userData);
             console.log(response.data);
@@ -24,7 +27,6 @@ const SignupScreen = () => {
             console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
         } catch (err) {
             console.error(err);
-            setError(err.response?.data?.message || 'Signup failed. Please try again.');
         }
     };
     return (
