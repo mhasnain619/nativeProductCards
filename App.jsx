@@ -11,14 +11,14 @@ import { View } from 'react-native'
 const App = () => {
   return (
     <>
-      {/* <NavigationReact /> */}
+      <NavigationReact />
       {/* <TabNavigation /> */}
       {/* <DrawerNavigation /> */}
       {/* <WelcomeScreen /> */}
       {/* <LoginScreen /> */}
-      <View>
+      {/* <View>
         <Header />
-      </View>
+      </View> */}
     </>
   )
 }

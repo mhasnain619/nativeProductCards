@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Image, Text, Alert, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+import MyButton from '../Components/Button/Button';
 
 const SignupScreen = () => {
     const navigation = useNavigation();
@@ -15,9 +16,11 @@ const SignupScreen = () => {
         confirmpassword: ''
     });
 
-    // console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
+    console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
 
     const handleSubmitData = async (e) => {
+        console.log('button clicked');
+
         e.preventDefault();
         if (name || email || password || confirmpassword == '') {
             Alert.alert('All fields are required.')
@@ -79,14 +82,15 @@ const SignupScreen = () => {
                     {/* <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
                         <Text style={styles.forgotPassword}>Already have an account? Log in</Text>
                     </TouchableOpacity> */}
-                    <Button
+                    <MyButton mode='contained' title='Signup' onPress={() => handleSubmitData} />
+                    {/* <Button
                         mode="contained"
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
                         onPress={handleSubmitData}
                     >
                         Sign Up
-                    </Button>
+                    </Button> */}
                 </View>
             </View>
         </ScrollView>
