@@ -11,7 +11,7 @@ const WelcomeScreen = () => {
             {/* Illustration */}
             <Image
                 height='100%' width='100%'
-                source={require('../Components/Images/home.png')}
+                source={require('../Components/Images/newLogohome.png')}
                 style={styles.image}
                 resizeMode="contain"
             />
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
     image: {
         // width: '100%',
-        height: 300,
+        height: 250,
         marginBottom: 5,
     },
     title: {
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     signUpButton: {
         width: '80%',
         marginVertical: 8,
-        borderColor: '#514EB6',
+        borderColor: '#009944',
         borderWidth: 2,
         borderRadius: 18,
         paddingVertical: 10,
@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     socialText: {
         marginTop: 10,
         fontSize: 14,
-        color: 'gray',
+        color: '009944',
     },
     socialIcons: {
         flexDirection: 'row',

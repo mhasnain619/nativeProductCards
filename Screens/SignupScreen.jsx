@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Image, Text, Alert, TouchableOpacity } from 'react-native';
 import { ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import MyButton from '../Components/Button/Button';
 
 const SignupScreen = () => {
     const navigation = useNavigation();
@@ -12,39 +11,52 @@ const SignupScreen = () => {
     const [userData, setUserData] = useState({
         name: '',
         email: '',
+        phone: '',
         password: '',
-        confirmpassword: ''
+        confirmpassword: '',
     });
 
-    console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
+    const handleSubmitData = async () => {
+        console.log('Button clicked');
+        console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
 
-    const handleSubmitData = async (e) => {
-        console.log('button clicked');
 
-        e.preventDefault();
-        if (name || email || password || confirmpassword == '') {
-            Alert.alert('All fields are required.')
+        // Validation
+        if (!userData.name || !userData.email || !userData.password || !userData.confirmpassword) {
+            Alert.alert('Error', 'All fields are required.');
+            return;
         }
+
+        if (userData.password !== userData.confirmpassword) {
+            Alert.alert('Error', 'Passwords do not match.');
+            return;
+        }
+
         try {
-            const response = await axios.post('http://localhost:5000/api/signup', userData);
+            const response = await axios.post('http://192.168.35.230/has/api/signup', userData);
             console.log(response.data);
-            Alert.alert('User Created Successfully');
-            console.log(userData.name, userData.email, userData.password, userData.confirmpassword);
+            Alert.alert('Success', 'User Created Successfully', [
+                {
+                    text: 'OK',
+                    onPress: () => navigation.navigate('LoginScreen'),
+                },
+            ]);
         } catch (err) {
             console.error(err);
+            Alert.alert('Error', 'Failed to create user. Please try again.');
         }
     };
+
     return (
         <ScrollView>
             <View style={styles.container}>
                 <View style={styles.card}>
                     <Image
-                        height='100%' width='100%'
-                        source={require('../Components/Images/loginImg.png')}
+                        source={require('../Components/Images/newLogo.png')}
                         style={styles.image}
                         resizeMode="contain"
                     />
-                    <Text style={styles.loginText}>Signup</Text>
+                    <Text style={styles.loginText}>Create an account</Text>
                     <TextInput
                         label="Name"
                         mode="outlined"
@@ -52,7 +64,6 @@ const SignupScreen = () => {
                         value={userData.name}
                         onChangeText={(text) => setUserData({ ...userData, name: text })}
                     />
-
                     <TextInput
                         label="Email"
                         mode="outlined"
@@ -61,7 +72,14 @@ const SignupScreen = () => {
                         value={userData.email}
                         onChangeText={(text) => setUserData({ ...userData, email: text })}
                     />
-
+                    <TextInput
+                        label="Phone"
+                        mode="outlined"
+                        style={styles.input}
+                        keyboardType="number"
+                        value={userData.phone}
+                        onChangeText={(text) => setUserData({ ...userData, phone: text })}
+                    />
                     <TextInput
                         label="Password"
                         mode="outlined"
@@ -76,27 +94,33 @@ const SignupScreen = () => {
                         secureTextEntry
                         style={styles.input}
                         value={userData.confirmpassword}
-                        onChangeText={(text) => setUserData({ ...userData, confirmpassword: text })} />
-
-                    <Text onPress={() => navigation.navigate('LoginScreen')} style={styles.forgotPassword}>Already have an account?</Text>
-                    {/* <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-                        <Text style={styles.forgotPassword}>Already have an account? Log in</Text>
-                    </TouchableOpacity> */}
-                    <MyButton mode='contained' title='Signup' onPress={() => handleSubmitData} />
-                    {/* <Button
+                        onChangeText={(text) => setUserData({ ...userData, confirmpassword: text })}
+                    />
+                    <Text
+                        onPress={() => navigation.navigate('LoginScreen')}
+                        style={styles.forgotPassword}
+                    >
+                        Already have an account?
+                    </Text>
+                    <Button
                         mode="contained"
                         style={styles.button}
                         contentStyle={{ paddingVertical: 6 }}
                         onPress={handleSubmitData}
                     >
                         Sign Up
-                    </Button> */}
+                    </Button>
+                    <Text style={styles.orcontine}>-------- or continue with -------</Text>
+                    <TouchableOpacity style={styles.loginwith} >
+                        <Text style={styles.loginwithText}> Login with Google</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
     );
-}
-export default SignupScreen
+};
+
+export default SignupScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -134,7 +158,20 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         alignItems: 'center',
         borderRadius: 25,
-        width: '40%',
-        backgroundColor: '#4B47F5',
+        width: '100%',
+        backgroundColor: '#009944',
     },
+    loginwith: {
+        alignSelf: 'flex-end',
+        alignItems: 'center',
+        borderRadius: 25,
+        width: '100%',
+        borderWidth: 2,
+        backgroundColor: '#ffffff',
+        borderColor: '#009944',
+        paddingVertical: 15
+    },
+    orcontine: {
+        marginVertical: '20'
+    }
 });

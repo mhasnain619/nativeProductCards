@@ -1,26 +1,63 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import React from 'react'
-import Home from '../Screens/Home'
-import Profile from '../Screens/Profile'
-import Contact from '../Screens/Contact'
-import Card from '../Components/Card/Card'
-import MyProducts from '../Screens/MyProducts'
-import { NavigationContainer } from '@react-navigation/native'
-import CardTwo from '../Components/Card/Card'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from 'react';
+import Home from '../Screens/Home';
+import Browse from '../Screens/Browse';
+import Orders from '../Screens/Orders';
+import Cart from '../Components/Card/Cart';
+import Account from '../Screens/Account';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Tab = createBottomTabNavigator()
+const Tab = createBottomTabNavigator();
+
 const TabNavigation = () => {
     return (
-        <NavigationContainer>
-            <Tab.Navigator>
-                <Tab.Screen name='Home' component={Home} />
-                <Tab.Screen name='Profile' component={Profile} />
-                <Tab.Screen name='Card' component={CardTwo} />
-                <Tab.Screen name='MyProducts' component={MyProducts} />
-            </Tab.Navigator>
-        </NavigationContainer>
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color, size }) => {
+                    let iconName;
 
-    )
-}
+                    switch (route.name) {
+                        case 'Home':
+                            iconName = 'home-outline';
+                            break;
+                        case 'Browse':
+                            iconName = 'search-outline';
+                            break;
+                        case 'Cart':
+                            iconName = 'cart-outline';
+                            break;
+                        case 'Orders':
+                            iconName = 'receipt-outline';
+                            break;
+                        case 'Account':
+                            iconName = 'person-outline';
+                            break;
+                    }
 
-export default TabNavigation
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#000',
+                tabBarInactiveTintColor: 'gray',
+            })}
+        >
+            <Tab.Screen
+                name='Home'
+                component={Home}
+                options={{
+                    headerShown: true,
+                    headerTitle: 'Find your flavour',
+                    headerStyle: {
+                        backgroundColor: '#e2e2e2',
+                    },
+                    headerShadowVisible: false,
+                }}
+            />
+            <Tab.Screen name='Browse' component={Browse} />
+            <Tab.Screen name='Cart' component={Cart} />
+            <Tab.Screen name='Orders' component={Orders} />
+            <Tab.Screen name='Account' component={Account} />
+        </Tab.Navigator>
+    );
+};
+
+export default TabNavigation;
